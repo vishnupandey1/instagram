@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Link } from "react-router-dom";
-import Divider from '@material-ui/core/Divider';
 
 const styles = {
   comment_author:{
@@ -21,11 +20,10 @@ const Comments = (props) => {
   let commentData = Object.values(props.commnets);
   let comments;
   if (commentData.length > 0 ) {
-    comments = commentData.map((comment) => {
+    comments = commentData.map((comment, key) => {
       return (
-        <p key={1} style={styles.comment}>
+        <p key={key} style={styles.comment}>
           <Link style={styles.comment_author} to={`/user/${comment.comment_author_id}`}>{comment.comment_author}</Link> {comment.comment}
-          <Divider variant="middle" />
         </p>
       )
     })

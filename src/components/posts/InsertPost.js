@@ -23,22 +23,22 @@ class InsertPost extends React.Component {
     let image = e.currentTarget.files[0];
 
     let reader = new FileReader();
-    reader.onloadend = async (evt) => {
+    reader.onloadend = async (e) => {
       let blob = new Blob([image], { type: "image/jpeg" });
       const uploadTask = await storageRef.child(`images/${image.name}`).put(blob);
       const imageSrc = await uploadTask.ref.getDownloadURL();
-      this.setState({ imageSrc})
+      this.setState({ imageSrc })
     }
-    reader.onerror = function (e) {
+    reader.onerror = (e) => {
       console.log("Failed file read: " + e.toString());
     };
     reader.readAsDataURL(image);
     return;
   };
-  
+
   handleSubmit = async () => {
     const { imageSrc, title } = this.state;
-    const { current_user_id } = this.props;
+    const { current_user_id, handleClose } = this.props;
     const { avatar_src, fullname  } = await getUserDetail(current_user_id)
     userProfileRef.ref(`/users/${current_user_id}/posts`).push({
       imageSrc,
@@ -49,15 +49,19 @@ class InsertPost extends React.Component {
       post_author_id: current_user_id,
       avatar_src: avatar_src
     });
-    this.props.handleClose();
+    handleClose();
   }
 
   render () {
+
+    const { open, imageSrc, } = this.state;
+    const { handleClose } = this.props;
+
     return (
       <MuiDialog
         aria-labelledby="dialog"
-        open={this.state.open}
-        onClose={this.props.handleClose}
+        open={open}
+        onClose={handleClose}
         scroll="body"
         disableBackdropClick
         disableEscapeKeyDown
@@ -70,9 +74,9 @@ class InsertPost extends React.Component {
           <Divider />
         </DialogTitle>
         <DialogContent>
-          { this.state.imageSrc && (
-            <image
-              src={this.state.imageSrc}
+          { imageSrc && (
+            <img
+              src={imageSrc}
               height="400"
               width="100%"
               alt="Image preview..."

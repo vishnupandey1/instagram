@@ -1,11 +1,13 @@
 import React from 'react';
 
+import { Link } from "react-router-dom";
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
+import Paper from '@material-ui/core/Paper';
 import { firebaseApp } from '../lib/firebase';
 
 class Login extends React.Component {
@@ -37,6 +39,7 @@ class Login extends React.Component {
 
   render() {
     return (
+      <React.Fragment>
       <Card className="login-page">
         <CardContent >
           <Typography align="center" variant="h3" color="textSecondary" gutterBottom>
@@ -68,6 +71,12 @@ class Login extends React.Component {
           </Button>
         </CardActions>
       </Card>
+      <Paper elevation={1} className="login-page">
+        <Typography variant="h6" align="center" color="textSecondary" component="h3">
+          {"Don't have an account? "} <Link to="/signup">Sign up</Link> 
+        </Typography>
+      </Paper>
+      </React.Fragment>
     );
   }
 }

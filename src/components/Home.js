@@ -46,19 +46,20 @@ class Home extends React.Component {
   };
 
   render() {
+   const { current_user_id, posts, open } = this.state;
 
-   if (this.state.current_user_id === '') {
-     return <div> <Link to="/login">Please</Link> login to continue....If do not have account please <Link to="/signup">signup</Link> first!!!</div>
+   if (current_user_id === '') {
+     return <div> Please <Link to="/login">login</Link> to continue....<br/>If do not have account please <Link to="/signup">signup</Link> first!!!</div>
    }
 
    let renderPostPreview = '';
-   if (this.state.posts.length > 0) {
-     renderPostPreview = this.state.posts.map((post,key) => {
+   if (posts.length > 0) {
+     renderPostPreview = posts.map((post,key) => {
         return (
           <PostPreview 
             post={post}
             key={key}
-            current_user_id={this.state.current_user_id}
+            current_user_id={current_user_id}
           />
         )
      });
@@ -66,7 +67,7 @@ class Home extends React.Component {
 
     return (
      <div>
-       <AppBar position="static" color="default">
+       <AppBar position="fixed" color="default">
           <Toolbar>
             <Typography 
               className="instagram-header"
@@ -95,14 +96,12 @@ class Home extends React.Component {
            </div>
            <Button
              variant="contained"
-             color="primary"
              onClick={this.handleOpen}
            >
              Upload post
            </Button>
            <Button
              variant="contained"
-             color="secondary"
              onClick={this.handleSignout}
            >
              sign out
@@ -110,10 +109,10 @@ class Home extends React.Component {
           </Toolbar>
         </AppBar>
         <div>
-        { this.state.open && (
+        { open && (
           <InsertPost
-            current_user_id={this.state.current_user_id}
-            open={this.state.open}
+            current_user_id={current_user_id}
+            open={open}
             handleClose={this.handleClose}
           />
         )}

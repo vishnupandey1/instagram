@@ -19,10 +19,19 @@ import Comments from './Comments';
 
 class PostPreview extends Component {
  
-  state = {
-    comment: '',
-    comments: this.props.post.comments || '',
-    likesCount : this.props.post.likesCount || 0
+  constructor(props) {
+    super(props);
+
+    let comments = [];
+    if (this.props.post.comments) {
+      comments = Object.values(this.props.post.comments);
+    }
+    this.state = {
+      comment: '',
+      comments: comments,
+      likesCount : this.props.post.likesCount || 0
+    }
+    console.log(comments)
   }
 
   handleLikes = () => {
@@ -36,72 +45,84 @@ class PostPreview extends Component {
   }
 
   handleComment = async () => {
-    const { comment } = this.state;
+    let { comment, comments } = this.state;
     if ('' === comment.trim()) {
       return;
     }
     const { current_user_id } = this.props;
     const { post_author_id, post_id } = this.props.post
     const { fullname } = await getUserDetail(current_user_id);
-    userProfileRef.ref(`/users/${post_author_id}/posts/${post_id}/comments`).push({
+
+    let newCommnetData = {
       comment,
       time: Date.now(),
       comment_author: fullname,
       comment_author_id: current_user_id
-    });
+    };
+    
+    comments[comments.length] = newCommnetData;
+    this.setState({ comments, comment: '' });
+
+    userProfileRef.ref(`/users/${post_author_id}/posts/${post_id}/comments`).push(newCommnetData);
+
   }
 
   render () {
+
+    const { index, post } = this.props;
+    const { comments, comment, likesCount } = this.state;
+    const { avatar_src, post_author, time, imageSrc, title } = post;
+
     return (
-      <div className="post-preview" key={this.props.index} style={{height: 'auto'}}>
+      <div className="post-preview" key={index} style={{height: 'auto'}}>
       <Card>
         <CardHeader
           avatar={
-            <Avatar alt="avatar" src={this.props.post.avatar_src} />
+            <Avatar alt="avatar" src={avatar_src} />
             }
-           title={this.props.post.post_author}
-           subheader={moment(this.props.post.time).format('LL')}
+           title={post_author}
+           subheader={moment(time).format('LL')}
            />
            <CardMedia
              Component="img"
              style={{height: 0,paddingTop: '80.25%'}}
-             src={this.props.post.imageSrc}
-             image={this.props.post.imageSrc}
+             src={imageSrc}
+             image={imageSrc}
              title="alt"
            />
            <CardActions disableActionSpacing>
              <IconButton aria-label="Likes" onClick={this.handleLikes}>
                <FavoriteIcon />
              </IconButton>
-             Likes...{this.state.likesCount}
+             Likes...{likesCount}
            </CardActions>
            <CardContent>
              <Typography component="div" style={{overflow: 'scroll'}}>
-               {this.props.post.title}
+               {title}
              </Typography>
              <br/>
              <Divider variant="middle" />
-             { '' !== this.state.comments && (
+             { comments.length > 0 && (
               <div style={{overflow: 'scroll'}}>
-                <Comments commnets={this.state.comments}/>
+                <Comments commnets={comments}/>
+                <Divider variant="middle" />
               </div>
              )}
-             <div >
-               <Input
-                 fullWidth
-                 multiline={true}
-                 disableUnderline
-                 margin="dense"
-                 placeholder="Add a commnet"
-                 inputProps={{
-                   'aria-label': 'Description',
-                 }}
-                 onChange={(e) => this.setState({comment: e.target.value})}
-               />
-               <IconButton aria-label="Add-commnet" onClick={this.handleComment}>
-                 <AddCommentIcon />
-               </IconButton>
-             </div>
+             <Input
+               fullWidth
+               multiline={true}
+               disableUnderline
+               margin="dense"
+               value={comment}
+               placeholder="Add a commnet"
+               inputProps={{
+                 'aria-label': 'Description',
+               }}
+               onChange={(e) => this.setState({comment: e.target.value})}
+             />
+             <IconButton aria-label="Add-commnet" onClick={this.handleComment}>
+               <AddCommentIcon />
+             </IconButton>
            </CardContent>
          </Card>
         <br/>
