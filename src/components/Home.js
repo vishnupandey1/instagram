@@ -94,18 +94,20 @@ class Home extends React.Component {
                placeholder="Search…"
              />
            </div>
-           <Button
-             variant="contained"
-             onClick={this.handleOpen}
-           >
-             Upload post
-           </Button>
-           <Button
-             variant="contained"
-             onClick={this.handleSignout}
-           >
-             sign out
-           </Button>
+           <div style={{ display: 'flex', marginLeft:'auto' }}>
+             <Button
+               variant="contained"
+               onClick={this.handleOpen}
+             >
+               Upload post
+             </Button>
+             <Button
+               variant="contained"
+               onClick={this.handleSignout}
+             >
+               sign out
+             </Button>
+           </div>
           </Toolbar>
         </AppBar>
         <div>

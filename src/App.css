@@ -26,17 +26,13 @@
 }
 
 .search {
-  background-color: #eeeeee;;
+  background-color: #eeeeee;
   width: 100px;
   border-radius: 1px;
   display: flex;
-  margin-left: 600;
-}
-
-.loader {
-  border: 0;
-  padding: 0;
-  background: transparent;
+  justify-content: center;
+  align-items: center;
+  margin-left: 550px;
 }
 
 .modal {

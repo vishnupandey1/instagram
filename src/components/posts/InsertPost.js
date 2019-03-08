@@ -79,7 +79,7 @@ class InsertPost extends React.Component {
               src={imageSrc}
               height="400"
               width="100%"
-              alt="Image preview..."
+              alt="m preview..."
             />
           )}
           <div className="img-uploader">

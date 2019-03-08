@@ -29,19 +29,40 @@ class PostPreview extends Component {
     this.state = {
       comment: '',
       comments: comments,
-      likesCount : this.props.post.likesCount || 0
+      likesCount: this.props.post.likesCount || 0,
+      likesData: this.props.post.likesData || [],
+      like: false
     }
-    console.log(comments)
+  }
+
+  componentDidMount() {
+    const { current_user_id } = this.props;
+    if (this.state.likesData.includes(current_user_id)) {
+      this.setState({ like: true });
+    }
   }
 
   handleLikes = () => {
-    let { likesCount} = this.state;
+    let { likesCount, likesData, like} = this.state;
+    const { current_user_id } = this.props;
     const { post_author_id, post_id } = this.props.post
-    likesCount = ++likesCount
+
+    if (likesData.includes(current_user_id)) {
+      const index = likesData.indexOf(current_user_id);
+      console.log(likesData.splice(index, 1));
+      likesCount = likesCount - 1;
+      like = false;
+    } else {
+      likesData[likesData.length] = current_user_id;
+      likesCount = likesCount + 1;
+      like = true;
+    }
+
+    this.setState({ likesCount, likesData, like });
     userProfileRef.ref(`/users/${post_author_id}/posts/${post_id}`).update({
-      likesCount: likesCount
+      likesCount,
+      likesData
     });
-    this.setState({ likesCount:likesCount });
   }
 
   handleComment = async () => {
@@ -70,7 +91,7 @@ class PostPreview extends Component {
   render () {
 
     const { index, post } = this.props;
-    const { comments, comment, likesCount } = this.state;
+    const { comments, comment, likesCount, like } = this.state;
     const { avatar_src, post_author, time, imageSrc, title } = post;
 
     return (
@@ -92,7 +113,7 @@ class PostPreview extends Component {
            />
            <CardActions disableActionSpacing>
              <IconButton aria-label="Likes" onClick={this.handleLikes}>
-               <FavoriteIcon />
+               <FavoriteIcon color={ like ? "secondary": "default" } />
              </IconButton>
              Likes...{likesCount}
            </CardActions>
