@@ -11,14 +11,15 @@ import Paper from '@material-ui/core/Paper';
 import { firebaseApp } from '../lib/firebase';
 
 class Login extends React.Component {
- 
-  state={
-    username:'',
-    password:'',
+
+  state = {
+    email: '',
+    password: '',
+    error: false
     }
 
   handleOnChange = (name) => (e) => {
-    this.setState({ [name]: e.target.value });
+    this.setState({ [name]: e.target.value , error: false });
   };
 
   handleSubmit = () => {
@@ -31,12 +32,13 @@ class Login extends React.Component {
         this.props.history.push('/');
       })
       .catch((error) => {
-        console.log("email already exyst");
-        this.setState({ error: error.message });
+        this.setState({ error: true, email: '', password: '' });
       });
     }
 
   render() {
+    const { email, password, error } = this.state;
+
     return (
       <React.Fragment>
       <Card className="login-page">
@@ -49,6 +51,7 @@ class Login extends React.Component {
             className="login-input"
             type="email"
             name="email"
+            value={email}
             margin="normal"
             variant="outlined"
             onChange = {this.handleOnChange('email')}
@@ -58,11 +61,17 @@ class Login extends React.Component {
             label="Password"
             className="login-input"
             type="password"
+            value={password}
             margin="normal"
             variant="outlined"
             onChange = {this.handleOnChange('password')}
           />
 
+          { error && (
+            <Typography variant="caption" color="secondary" gutterBottom>
+              {"The email address or password that you've entered doesn't match any account. Sign up for an account."}
+            </Typography>
+          )}
         </CardContent>
         <CardActions>
           <Button variant="contained" className ="login-button"color="primary" onClick={this.handleSubmit}>

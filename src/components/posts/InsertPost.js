@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Input from '@material-ui/core/Input';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { storageRef, userProfileRef } from '../lib/firebase';
 import { getUserDetail } from '../lib/Service';
 
@@ -17,7 +18,8 @@ class InsertPost extends React.Component {
   state = {
     open: this.props.open,
     imageSrc: '',
-    title: ''
+    title: '',
+    loading: false
   }
 
   handleSelect = (e) => {
@@ -25,16 +27,18 @@ class InsertPost extends React.Component {
       return;
     }
     let image = e.currentTarget.files[0];
+    this.setState({ loading: true });
 
     let reader = new FileReader();
     reader.onloadend = async (e) => {
       let blob = new Blob([image], { type: "image/jpeg" });
       const uploadTask = await storageRef.child(`images/${image.name}`).put(blob);
       const imageSrc = await uploadTask.ref.getDownloadURL();
-      this.setState({ imageSrc })
+      this.setState({ imageSrc, loading: false })
     }
     reader.onerror = (e) => {
       console.log("Failed file read: " + e.toString());
+      this.setState({ loading: false });
     };
     reader.readAsDataURL(image);
     return;
@@ -62,7 +66,7 @@ class InsertPost extends React.Component {
 
   render () {
 
-    const { open, imageSrc } = this.state;
+    const { open, imageSrc, loading } = this.state;
     const { handleClose } = this.props;
 
     return (
@@ -89,6 +93,9 @@ class InsertPost extends React.Component {
               width="100%"
               alt="m preview..."
             />
+          )}
+          { loading && (
+            <CircularProgress  color="primary" />
           )}
           <div className={styles.uploader}>
             <input
