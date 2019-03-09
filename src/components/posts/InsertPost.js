@@ -21,6 +21,9 @@ class InsertPost extends React.Component {
   }
 
   handleSelect = (e) => {
+    if (e.currentTarget.files.length === 0) {
+      return;
+    }
     let image = e.currentTarget.files[0];
 
     let reader = new FileReader();
@@ -39,6 +42,10 @@ class InsertPost extends React.Component {
 
   handleSubmit = async () => {
     const { imageSrc, title } = this.state;
+    if ('' === imageSrc && '' === title) {
+      return;
+    }
+
     const { current_user_id, handleClose } = this.props;
     const { avatar_src, fullname  } = await getUserDetail(current_user_id)
     userProfileRef.ref(`/users/${current_user_id}/posts`).push({
@@ -55,7 +62,7 @@ class InsertPost extends React.Component {
 
   render () {
 
-    const { open, imageSrc, } = this.state;
+    const { open, imageSrc } = this.state;
     const { handleClose } = this.props;
 
     return (
@@ -111,6 +118,7 @@ class InsertPost extends React.Component {
             Close
           </Button>
           <Button
+            disabled={'' === imageSrc}
             variant="contained"
             color="primary"
             onClick={this.handleSubmit}
