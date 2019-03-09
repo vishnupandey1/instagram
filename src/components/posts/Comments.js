@@ -1,19 +1,7 @@
 import React from 'react';
-
 import { Link } from "react-router-dom";
 
-const styles = {
-  comment_author:{
-    fontWeight: 'bold',
-    marginRight: 5,
-    textDecoration: 'none',
-    color: 'black',
-  },
-  comment:{
-    marginTop: 10,
-    marginBottom: 0
-  }
-}
+import styles from './Comments.module.css';
 
 const Comments = (props) => {
 
@@ -22,8 +10,8 @@ const Comments = (props) => {
   if (commentData.length > 0 ) {
     comments = commentData.map((comment, key) => {
       return (
-        <p key={key} style={styles.comment}>
-          <Link style={styles.comment_author} to={`/user/${comment.comment_author_id}`}>{comment.comment_author}</Link> {comment.comment}
+        <p key={key} className={styles.comment}>
+          <Link className={styles.comment_author} to={`/user/${comment.comment_author_id}`}>{comment.comment_author}</Link> {comment.comment}
         </p>
       )
     })

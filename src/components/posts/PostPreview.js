@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 
+import styles from './PostPreview.module.css';
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
@@ -95,14 +96,14 @@ class PostPreview extends Component {
     const { avatar_src, post_author, time, imageSrc, title } = post;
 
     return (
-      <div className="post-preview" key={index} style={{height: 'auto'}}>
-      <Card>
-        <CardHeader
-          avatar={
-            <Avatar alt="avatar" src={avatar_src} />
-            }
-           title={post_author}
-           subheader={moment(time).format('LL')}
+      <div className={styles.preview} key={index}>
+        <Card>
+          <CardHeader
+            avatar={
+              <Avatar alt="avatar" src={avatar_src} />
+              }
+             title={post_author}
+             subheader={moment(time).format('LL')}
            />
            <CardMedia
              Component="img"

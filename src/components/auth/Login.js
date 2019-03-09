@@ -15,7 +15,6 @@ class Login extends React.Component {
   state={
     username:'',
     password:'',
-    error:''
     }
 
   handleOnChange = (name) => (e) => {

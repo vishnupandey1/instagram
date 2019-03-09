@@ -70,7 +70,6 @@ class Home extends React.Component {
        <AppBar position="fixed" color="default">
           <Toolbar>
             <Typography 
-              className="instagram-header"
               variant="h6" 
               color="inherit"
             >

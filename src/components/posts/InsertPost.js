@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import styles from './PostPreview.module.css';
 import MuiDialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -65,7 +66,7 @@ class InsertPost extends React.Component {
         scroll="body"
         disableBackdropClick
         disableEscapeKeyDown
-        className="modal"
+        className={styles.modal}
       >
         <DialogTitle>
           <Typography variant="h6"  align="center" id="modal-title">
@@ -82,7 +83,7 @@ class InsertPost extends React.Component {
               alt="m preview..."
             />
           )}
-          <div className="img-uploader">
+          <div className={styles.uploader}>
             <input
               type="file"
               name="pic"

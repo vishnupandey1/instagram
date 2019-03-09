@@ -1,0 +1,11 @@
+.comment_author {
+  font-weight: bold;
+  margin-right: 5;
+  text-decoration: none;
+  color: black;
+  }
+
+.comment {
+  margin-top: 10;
+  margin-bottom: 0;
+}

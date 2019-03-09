@@ -1,11 +1,13 @@
 import React from 'react';
 
+import styles from './Gallery.module.css';
+
 const Gallery = (props) => {
   const { posts } = props;
   return (
-    <div className="profile-page">
+    <div className={styles.gallery}>
       {posts.map((post,i) => (
-        <div className="profile-page-image"key={i}>
+        <div className={styles.image} key={i}>
           <img 
             width="100%"
             height="100%" 

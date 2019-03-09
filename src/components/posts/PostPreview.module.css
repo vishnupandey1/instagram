@@ -1,0 +1,8 @@
+.preview {
+  width: 500px;
+  overflow: hidden;
+  border: 0px solid #000;
+  margin: 50px auto;
+  padding: 10px;
+  height: 'auto'
+}

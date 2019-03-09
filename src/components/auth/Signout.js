@@ -9,7 +9,6 @@ class Signout extends React.Component {
    }
 
   signout = () =>{
-    console.log('signout')
     return firebaseApp.auth().signOut()
   }
 

@@ -1,0 +1,43 @@
+.avatar {
+  margin-left: 150;
+  width: 150;
+  height: 150;
+}
+
+.seperator {
+  background-color: 	#D3D3D3;
+  display: 'block';
+  height: 32;
+  margin-left: '14px';
+  margin-right: '14px';
+  min-width: 1;
+}
+
+.search {
+  background-color: #eeeeee;
+  width: 100px;
+  border-radius: 1px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 550px;
+}
+
+.header {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  top: 0;
+  color: #fff;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.profile {
+  display: flex;
+  margin: 80px auto 0 auto;
+  max-width: 1000px;
+  height: 200px;
+  background-color: #eeeeee;
+}
