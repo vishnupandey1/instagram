@@ -14,9 +14,11 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import Divider from '@material-ui/core/Divider';
 import Input from '@material-ui/core/Input';
 import AddCommentIcon from '@material-ui/icons/AddComment';
+import CloudDownlaodIcon from '@material-ui/icons/CloudDownload';
 import { getUserDetail } from '../lib/Service'; 
 import { userProfileRef } from '../lib/firebase';
 import Comments from './Comments';
+import Zoom from '@material-ui/core/Zoom';
 
 class PostPreview extends Component {
  
@@ -32,7 +34,8 @@ class PostPreview extends Component {
       comments: comments,
       likesCount: this.props.post.likesCount || 0,
       likesData: this.props.post.likesData || [],
-      like: false
+      like: false,
+      checked:false
     }
   }
 
@@ -89,10 +92,29 @@ class PostPreview extends Component {
 
   }
 
+  handleDownload = () => {
+   fetch(this.props.post.imageSrc, {credentials: 'include'}).then(function(response) {
+     if(response.ok) {
+       return response.blob();
+     }
+     }).then(response => {
+       const filename =  response.headers.get('Content-Disposition').split('filename=')[1];
+       response.blob().then(blob => {
+         let url = window.URL.createObjectURL(blob);
+         let a = document.createElement('a');
+         a.href = url;
+         a.download = filename;
+         a.click();
+      });
+    }).catch(e => {
+      console.log(e)
+    });
+  }
+
   render () {
 
     const { index, post } = this.props;
-    const { comments, comment, likesCount, like } = this.state;
+    const { comments, comment, likesCount, like, checked } = this.state;
     const { avatar_src, post_author, time, imageSrc, title } = post;
 
     return (
@@ -107,16 +129,27 @@ class PostPreview extends Component {
            />
            <CardMedia
              Component="img"
-             style={{height: 0,paddingTop: '80.25%'}}
+             style={{height: 0,paddingTop: '80.25%',display: 'flex',
+    justifyContent: 'center',
+    cursor: 'ponter'
+    }}
              src={imageSrc}
              image={imageSrc}
              title="alt"
-           />
+             onClick={() => this.setState({checked: checked ? false:true})}
+           >
+            <Zoom in={checked} timeout={500}>
+               <FavoriteIcon color={"secondary"} />
+           </Zoom>
+           </CardMedia>
            <CardActions disableActionSpacing>
              <IconButton aria-label="Likes" onClick={this.handleLikes}>
                <FavoriteIcon color={ like ? "secondary": "default" } />
              </IconButton>
              Likes...{likesCount}
+             <IconButton aria-label="Add-commnet" onClick={this.handleDownload}>
+               <CloudDownlaodIcon />
+             </IconButton>
            </CardActions>
            <CardContent>
              <Typography component="div" style={{overflow: 'scroll'}}>
