@@ -20,6 +20,20 @@ import { userProfileRef } from '../lib/firebase';
 import Comments from './Comments';
 import Zoom from '@material-ui/core/Zoom';
 
+const style = {
+  image: {
+    height: 0,
+    paddingTop: '80.25%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    cursor: 'pointer',
+  },
+  zoom: {
+    marginTop: '-80%'
+  }
+};
+
 class PostPreview extends Component {
  
   constructor(props) {
@@ -109,6 +123,7 @@ class PostPreview extends Component {
     }).catch(e => {
       console.log(e)
     });
+
   }
 
   render () {
@@ -129,18 +144,15 @@ class PostPreview extends Component {
            />
            <CardMedia
              Component="img"
-             style={{height: 0,paddingTop: '80.25%',display: 'flex',
-    justifyContent: 'center',
-    cursor: 'ponter'
-    }}
+             style={style.image}
              src={imageSrc}
              image={imageSrc}
              title="alt"
              onClick={() => this.setState({checked: checked ? false:true})}
            >
-            <Zoom in={checked} timeout={500}>
+             <Zoom style={style.zoom} in={checked} timeout={500}>
                <FavoriteIcon color={"secondary"} />
-           </Zoom>
+             </Zoom>
            </CardMedia>
            <CardActions disableActionSpacing>
              <IconButton aria-label="Likes" onClick={this.handleLikes}>
