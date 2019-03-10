@@ -1,15 +1,5 @@
 import { firebaseApp, userProfileRef } from './firebase';
 
-export const isLoggedInUser = async () => {
-  let user_id = '';
-  let loggedIn = await firebaseApp.auth().onAuthStateChanged(function(user) {
-    if (user) {
-      user_id = firebaseApp.auth().currentUser.uid;
-    }
-  });
-  return user_id
-}
-
 export const getPosts = async () => {
   let  posts = [];
   let datas = await userProfileRef.ref('users').once('value', snapshot => {
@@ -18,7 +8,6 @@ export const getPosts = async () => {
         snap.forEach(function(data) {
            let element = data.val();
            element.post_id = data.key;
-           console.log(element)
            posts.push(element)
         });
       });

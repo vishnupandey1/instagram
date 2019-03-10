@@ -13,6 +13,7 @@ class Signout extends React.Component {
   }
 
   render() {
+    localStorage.removeItem("current_user_id");
     this.props.history.push('/login');
     return null;
   }

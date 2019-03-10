@@ -28,13 +28,14 @@ class Login extends React.Component {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((user) => {
+        localStorage.setItem("current_user_id", user.user.uid);
         console.log("successfullylogin");
         this.props.history.push('/');
-      })
-      .catch((error) => {
-        this.setState({ error: true, email: '', password: '' });
-      });
-    }
+    })
+    .catch((error) => {
+      this.setState({ error: true, email: '', password: '' });
+    });
+  }
 
   render() {
     const { email, password, error } = this.state;

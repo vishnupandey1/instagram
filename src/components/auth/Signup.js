@@ -40,6 +40,7 @@ class Signup extends React.Component {
       .createUserWithEmailAndPassword(email, password)
       .then((user) => {
         const user_id = user.user.uid
+        localStorage.setItem("current_user_id", user_id);
         userProfileRef.ref('/users/' + user_id).set({
           email,
           fullname,

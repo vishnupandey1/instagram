@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { Link } from "react-router-dom";
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -10,7 +9,7 @@ import grey from '@material-ui/core/colors/grey';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import InsertPost from './posts/InsertPost'
-import { isLoggedInUser, getPosts } from './lib/Service';
+import { getPosts } from './lib/Service';
 import  PostPreview from './posts/PostPreview';
 
 const grey500 = grey['500'];
@@ -20,15 +19,14 @@ class Home extends React.Component {
   state = {
     open:false,
     posts: [],
-    current_user_id: '',
+    current_user_id: localStorage.getItem('current_user_id') || '',
     user_name:''
-  };
-  
+  }
+
   async componentDidMount () {
-   const current_user_id = await isLoggedInUser();
    const posts = await getPosts();
    console.log(posts)
-   this.setState({posts: posts, current_user_id:current_user_id });
+   this.setState({posts: posts });
   }
 
   handleOpen = () => {
@@ -49,7 +47,8 @@ class Home extends React.Component {
    const { current_user_id, posts, open } = this.state;
 
    if (current_user_id === '') {
-     return <div> Please <Link to="/login">login</Link> to continue....<br/>If do not have account please <Link to="/signup">signup</Link> first!!!</div>
+     this.props.history.push('/login');
+     return null
    }
 
    let renderPostPreview = '';
@@ -66,7 +65,7 @@ class Home extends React.Component {
    }
 
     return (
-     <div>
+     <div className="home">
        <AppBar position="fixed" color="default">
           <Toolbar>
             <Typography 
