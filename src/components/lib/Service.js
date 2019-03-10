@@ -1,4 +1,4 @@
-import { firebaseApp, userProfileRef } from './firebase';
+import { userProfileRef } from './firebase';
 
 export const getPosts = async () => {
   let  posts = [];
@@ -35,4 +35,19 @@ export const getUserPosts = (user_id) => {
       return Object.values(snapshot.val())
     })
   return posts;
+}
+
+export const checkExistingUser = async (user_id) => {
+  let isExist;
+  let posts = await userProfileRef.ref('/users/').once('value')
+        .then(snapshot => Object.values(snapshot.val()).forEach( (snap) => {
+        if (snap.user_id === user_id) {
+          isExist = true;
+        } else {
+          isExist = false;
+        }
+      }
+    )
+  )
+  return isExist;
 }

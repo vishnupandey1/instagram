@@ -10,6 +10,7 @@ import TextField from '@material-ui/core/TextField';
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
 import { firebaseApp, userProfileRef } from '../lib/firebase';
+import { createNewUserWithGoogle } from '../lib/helper';
 
 const styles = {
   avatar: {
@@ -55,10 +56,20 @@ class Signup extends React.Component {
       });
   };
 
+   handleGoogleSubmit = async () => {
+     const googleLogin = await createNewUserWithGoogle();
+     this.props.history.push('/');
+   }
+
   render() {
     return (
       <React.Fragment>
         <Card className="login-page">
+          <CardActions>
+            <Button variant="contained" className ="login-button"color="primary" onClick={this.handleGoogleSubmit}>
+              Sign up with Google
+            </Button>
+          </CardActions>
           <CardContent >
             <Typography align="center" variant="h3" color="textSecondary" gutterBottom>
               Instagram

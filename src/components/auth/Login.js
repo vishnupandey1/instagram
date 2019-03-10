@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import { firebaseApp } from '../lib/firebase';
+import { createNewUserWithGoogle } from '../lib/helper';
 
 class Login extends React.Component {
 
@@ -16,7 +17,7 @@ class Login extends React.Component {
     email: '',
     password: '',
     error: false
-    }
+  }
 
   handleOnChange = (name) => (e) => {
     this.setState({ [name]: e.target.value , error: false });
@@ -28,13 +29,17 @@ class Login extends React.Component {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((user) => {
-        localStorage.setItem("current_user_id", user.user.uid);
-        console.log("successfullylogin");
+        localStorage.setItem("current_user_id", user.uid);
         this.props.history.push('/');
     })
     .catch((error) => {
       this.setState({ error: true, email: '', password: '' });
     });
+  }
+
+  handleGoogleSubmit = async () => {
+    const googleLogin = await createNewUserWithGoogle();
+    this.props.history.push('/');
   }
 
   render() {
@@ -43,6 +48,11 @@ class Login extends React.Component {
     return (
       <React.Fragment>
       <Card className="login-page">
+        <CardActions>
+          <Button variant="contained" className ="login-button"color="primary" onClick={this.handleGoogleSubmit}>
+            Sign in with Google
+          </Button>
+        </CardActions>
         <CardContent >
           <Typography align="center" variant="h3" color="textSecondary" gutterBottom>
             Instagram
