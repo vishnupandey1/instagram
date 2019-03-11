@@ -29,7 +29,7 @@ class Login extends React.Component {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((user) => {
-        localStorage.setItem("current_user_id", user.uid);
+        localStorage.setItem("current_user_id", user.user.uid);
         this.props.history.push('/');
     })
     .catch((error) => {

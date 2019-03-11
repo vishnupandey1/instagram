@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 
 import styles from './UserProfile.module.css';
 import AppBar from '@material-ui/core/AppBar';
@@ -66,7 +67,9 @@ class UserProfile extends Component {
               variant="h6"
               color="inherit"
             >
-              <InstagramIcon/>
+              <Link to={`/`}>
+                <InstagramIcon />
+              </Link>
             </Typography>
             <span
               className={styles.seperator}
