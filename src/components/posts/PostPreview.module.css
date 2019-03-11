@@ -6,3 +6,10 @@
   padding: 10px;
   height: 'auto'
 }
+
+.author_title {
+  font-weight: bold;
+  font-size: medium;
+  text-decoration: none;
+  color: black;
+}

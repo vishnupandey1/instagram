@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import { Link } from 'react-router-dom'
 
 import styles from './PostPreview.module.css';
 import Typography from '@material-ui/core/Typography'
@@ -130,16 +131,20 @@ class PostPreview extends Component {
 
     const { index, post } = this.props;
     const { comments, comment, likesCount, like, checked } = this.state;
-    const { avatar_src, post_author, time, imageSrc, title } = post;
+    const { avatar_src, post_author, time, imageSrc, title, post_author_id } = post;
 
     return (
       <div className={styles.preview} key={index}>
         <Card>
           <CardHeader
             avatar={
-              <Avatar alt="avatar" src={avatar_src} />
+              <Avatar component={Link} to={`/user/${post_author_id}`} alt="avatar" src={avatar_src} />
               }
-             title={post_author}
+             title={
+               <Link to={`/user/${post_author_id}`} className={styles.author_title}>
+                 {post_author}
+               </Link>
+             }
              subheader={moment(time).format('LL')}
            />
            <CardMedia
