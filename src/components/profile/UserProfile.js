@@ -18,6 +18,7 @@ const style = {
     marginLeft: 150,
     width: 150,
     height: 150,
+    marginTop: '25px'
   }
 };
 
@@ -59,34 +60,34 @@ class UserProfile extends Component {
 
     return (
       <React.Fragment>
-        <header className={styles.header}>
-          <AppBar position="static" color="default">
-            <Toolbar>
-              <Typography 
-                variant="h6" 
-                color="inherit"
-              >
-                <InstagramIcon/>
-              </Typography>
-              <span
-                className={styles.seperator}
-              />
-              <div className={styles.search}>
-                <div>
-                  <SearchIcon />
-                </div>
-                <InputBase
-                  placeholder="Search…"
-                />
+        <AppBar  position="fixed" color="default">
+          <Toolbar>
+            <Typography
+              variant="h6"
+              color="inherit"
+            >
+              <InstagramIcon/>
+            </Typography>
+            <span
+              className={styles.seperator}
+            />
+            <div className={styles.search}>
+              <div>
+                <SearchIcon />
               </div>
-            </Toolbar>
-          </AppBar>
-        </header>
+              <InputBase
+                placeholder="Search…"
+              />
+            </div>
+          </Toolbar>
+        </AppBar>
         <div className={styles.profile}>
           <Avatar alt="useravatar" src={posts[0].avatar_src} style={style.avatar} />
-          <Typography variant="h3" align="center" gutterBottom>
-            {posts[0].post_author}
-          </Typography>
+          <div className={styles.user_name}>
+            <Typography variant="h3" align="center" gutterBottom>
+              {posts[0].post_author}
+            </Typography>
+          </div>
         </div>
         <div className={styles.button}>
           <Button 
