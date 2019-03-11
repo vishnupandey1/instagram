@@ -7,9 +7,11 @@ import { InstagramIcon } from '../lib/CustomSVGIcons'
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
 import Gallery from './Gallery';
 import Typography from '@material-ui/core/Typography';
 import { getUserPosts } from '../lib/Service'; 
+import  PostPreview from '../posts/PostPreview';
 
 const style = {
   avatar: {
@@ -21,7 +23,8 @@ const style = {
 
 class UserProfile extends Component {
   state = {
-    posts: []
+    posts: [],
+    activeTab: 'Grid'
   }
 
   async componentDidMount() {
@@ -29,10 +32,29 @@ class UserProfile extends Component {
     this.setState({posts})
   }
 
+  handleOnChange = (name) => (e) => {
+    this.setState({ activeTab: name });
+  };
+
   render() {
-    const { posts } = this.state;
+    const { posts, activeTab } = this.state;
     if (posts.length < 1) {
       return (<div> Loading... </div>)
+    }
+
+    let renderPostPreview = '';
+    if ('List' === activeTab) {
+      if (posts.length > 0) {
+        renderPostPreview = posts.map((post,key) => {
+           return (
+             <PostPreview
+               post={post}
+               key={key}
+               current_user_id={this.props.match.params.userId}
+             />
+           )
+        });
+      }
     }
 
     return (
@@ -66,7 +88,26 @@ class UserProfile extends Component {
             {posts[0].post_author}
           </Typography>
         </div>
-        <Gallery posts={posts}/>
+        <div className={styles.button}>
+          <Button 
+            variant="outlined"
+            size="medium"  
+            onClick={this.handleOnChange('Grid')}
+          >
+            Grid
+          </Button>
+          <Button 
+            variant="outlined"
+            size="medium"  
+            onClick={this.handleOnChange('List')}
+          >
+            List
+          </Button>
+        </div>
+        {renderPostPreview}
+        {  'Grid' === activeTab && (
+          <Gallery posts={posts}/>
+        )}
       </React.Fragment>
     )
   }
