@@ -27,7 +27,7 @@ class Signup extends React.Component {
     fullname: '',
     username:'',
     password:'',
-    avatar_src: 'https://pngimage.net/wp-content/uploads/2018/05/default-avatar-png-9.png',
+    avatar_src: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
     }
 
   handleOnChange = (name) => (e) => {

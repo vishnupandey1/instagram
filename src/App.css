@@ -33,4 +33,38 @@
   justify-content: center;
   align-items: center;
   margin-left: 550px;
+  flex: 0 0 auto;
+  padding: 0 15px;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.app-header-icon {
+  flex: 1;
+  padding: 0 15px;
+  display: flex;
+}
+
+.app-header-button {
+  flex: 1;
+  padding: 0 15px;
+  justify-content: flex-end;
+  align-items: flex-end;
+  display: flex;
+}
+
+.app-header-search {
+  flex: 1;
+  display: flex;
+  flex: 0 0 auto;
+  padding: 0 15px;
+  align-items: center;
+  margin-left: 0;
+  justify-content: center;
+  background-color: #eee;
+  width: 100px;
+  border-radius: 1px;
 }

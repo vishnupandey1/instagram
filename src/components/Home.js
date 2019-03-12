@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
@@ -67,24 +68,17 @@ class Home extends React.Component {
     return (
      <div className="home">
        <AppBar position="fixed" color="default">
-          <Toolbar>
-            <Typography 
+          <Toolbar className="app-header">
+            <Typography
+              className="app-header-icon"
               variant="h6" 
               color="inherit"
             >
-              <InstagramIcon/>
+              <Link to={`/`}>
+                <InstagramIcon />
+              </Link>
             </Typography>
-            <span
-              style={{
-                backgroundColor: grey500,
-                display: 'block',
-                height: 32,
-                marginLeft: '14px',
-                marginRight: '14px',
-                minWidth: 1
-              }}
-            />
-            <div className="search">
+            <div className="app-header-search">
              <div>
                <SearchIcon />
              </div>
@@ -92,7 +86,7 @@ class Home extends React.Component {
                placeholder="Search…"
              />
            </div>
-           <div style={{ display: 'flex', marginLeft:'auto' }}>
+           <div className="app-header-button">
              <Button
                variant="contained"
                onClick={this.handleOpen}
